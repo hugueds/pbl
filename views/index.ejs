@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="PblApp">
+  <head>
+    <base href="/"/>
+    <meta name="author" content="Hugo Peres - SSBHPE"/>
+    <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem"/>
+    <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry"/>
+    <title>PICK BY LIGHT</title>
+    <link rel='stylesheet' href="stylesheets/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel='stylesheet' href='/stylesheets/style-pbl.css' />
+  </head>
+
+  <body ng-controller='PickByLight'>
+      
+
+    <ui-view></ui-view>    
+    
+    
+    <!-- SOCKET I/O -->     
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- MODULES -->    
+    <script type="text/javascript" src="javascripts/angular/angular.min.js"> </script>
+    <!-- <script type="text/javascript" src="javascripts/angular/angular-websocket.js"> </script> -->
+    <script type="text/javascript" src="javascripts/angular/angular-ui-router.js"> </script>
+    <script type="text/javascript" src="javascripts/angularApp.js"> </script>
+    <!-- FILTERS -->
+    <script type="text/javascript" src="javascripts/filters/filters.js"> </script>
+    <!-- SERVICES -->   
+    <script type="text/javascript" src="javascripts/services/pbl-service.js"> </script>
+    <script type="text/javascript" src="javascripts/services/socket-service.js"> </script>    
+    <!-- CONTROLLERS -->    
+    <script type="text/javascript" src="javascripts/controllers/pbl-controller.js"> </script>
+    <!-- SCRIPTS -->
+    <script src="javascripts/scripts.js"></script>
+
+  </body>
+
+
+
+</html>
