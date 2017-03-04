@@ -1,16 +1,14 @@
-const mongoose = require('mongoose')
-, db = 'mongodb://localhost/pbl';
+const mongoose = require('mongoose');
+const db = 'mongodb://localhost/pbl';
 
 var connection = mongoose.connection;
 
 mongoose.connect(db);
 
 connection
-	.on('error', console.error.bind(console, 'connection error:'))
+	.on('error', console.error.bind(console, 'connection error:' + error))
 	.once('open', function() {
   		console.log("Connected in " + db)
-	})
-
-;
+	});
 
 module.exports = mongoose;

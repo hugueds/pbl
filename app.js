@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const app = require('express')();
 const path = require('path');
@@ -12,15 +13,17 @@ var mongoose = require('./db/connect');
 
 var PartMissing = require('./models/PartMissing');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const index = require('./routes/index');
 
-var clients = {};
+var clients = [];
 
 io.on('connection', function(socket) {
 
     console.log('A CLIENT HAS CONNECTED! ' + socket.request.connection.remoteAddress);
+
+	clients.push(socket);
 
     socket
         .on('dec-part', (data) => {
@@ -32,13 +35,18 @@ io.on('connection', function(socket) {
             part.save();
         })
 
-    .on('serial', function(data) {
-        io.emit('serial', data);
-    })
+	.on('deleted-part', (data) => {
+		console.log("Part deleted");
+	})
+
 
     .on('disconnect', function() {
-        console.log('SOCKET ID:' + socket.id + ' desconectado');
-        delete socket;
+
+	var idx = clients.indexOf(socket);
+
+	clients.splice(idx, 1);
+
+        console.log('SOCKET ID:' + socket.id + ' desconectado');	
     });
 
     io.emit('newConnection', socket.request.connection.remoteAddress);

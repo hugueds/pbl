@@ -1,18 +1,38 @@
 {
-  "name": "takt-webserver",
-  "version": "0.0.0",
+  "name": "pick-by-light",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "dotenv": "^4.0.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "socket.io": "^1.7.2"
-  }
+    "socket.io": "^1.7.3"
+  },
+  "description": "Pick By Light",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hugueds/pbl.git"
+  },
+  "keywords": [
+    "pickbylight"
+  ],
+  "author": "Hugo Peres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hugueds/pbl/issues"
+  },
+  "homepage": "https://github.com/hugueds/pbl#readme"
 }
