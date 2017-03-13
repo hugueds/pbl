@@ -1,0 +1,25 @@
+CACHE MANIFEST
+
+#v6
+
+javascripts/angular/angular.min.js
+javascripts/angular/angular-ui-router.js
+javascripts/bootstrap/ui.bootstrap.min.js
+javascripts/angularApp.js
+javascripts/filters/filters.js
+javascripts/services/pbl-service.js
+javascripts/services/socket-service.js
+javascripts/controllers/pbl-controller.js
+javascripts/scripts.js
+templates/
+templates/index.html
+templates/ajustes/index.html
+
+
+stylesheets/style.css
+stylesheets/style-pbl.css
+stylesheets/bootstrap/dist/css/bootstrap.min.css
+
+
+NETWORK:
+*

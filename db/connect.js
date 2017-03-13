@@ -6,7 +6,7 @@ var connection = mongoose.connection;
 mongoose.connect(db);
 
 connection
-	.on('error', console.error.bind(console, 'connection error:' + error))
+	.on('error', console.error.bind(console, 'connection error:'))
 	.once('open', function() {
   		console.log("Connected in " + db)
 	});
