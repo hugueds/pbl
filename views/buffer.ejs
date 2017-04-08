@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html manifest='offline.manifest'>
+
+<head>
+    <base href="/buffer" />
+    <meta name="author" content="Hugo Peres - SSBHPE" />
+    <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem" />
+    <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry" />
+    <title>PICK BY LIGHT</title>
+    <link rel='manifest' href='app.manifest' />
+</head>
+
+<body>
+
+    <button type="">Buffer 58</button>
+    <button type="">Buffer 59</button>
+
+    <div id="canvas">
+
+    </div>
+
+    <script src='javascripts/p5/p5.min.js'></script>
+
+    <script>
+
+        var screenHeight = window.innerHeight;
+        var screenWidth = window.innerWidth;
+
+        var bg = new Array(100, 222, 200);
+
+        var partBoxes = [
+            new PartBox(123,1,1,2)
+        ];
+
+        var shelfs = [
+            new Shelf(2, partBoxes)
+            ,new Shelf(4, partBoxes)
+            ,new Shelf(6, partBoxes)
+        ];
+
+        var buffer = new LBuffer(58, shelfs);               
+
+
+        function LBuffer(number, shelfs) {
+            this.number = number;
+            this.shelfs = shelfs;
+            this.size = shelfs.length;
+        }
+
+        function Shelf(number, parts) {
+            this.number = number;
+            this.parts = parts;
+        }
+
+        function PartBox(number, size, position, level) {
+            this.number = number;
+            this.size = size;
+            this.position = position;
+            this.level = level;
+        }
+
+        function Division(){
+            this.size = 0.01;
+        }
+
+
+
+        function setup() {
+            var canvas = createCanvas(screenWidth - (screenWidth * 0.03) , screenHeight - (screenHeight * 0.1));
+            canvas.parent("canvas");            
+        }
+
+        function draw() {
+            //createBuffer();            
+            background(bg);
+            rect(screenWidth * 0.02, screenHeight * 0.04, screenWidth * 0.075, screenHeight * 0.8);
+            fill(0);
+            rect(screenWidth * 0.02, screenHeight * 0.84, screenWidth * 0.93, screenHeight * 0.015);
+            rect(screenWidth * 0.23, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.40, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.57, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.74, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.94, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            fill(255);
+            shelfs.forEach(a => a);
+        }
+
+        
+    </script>
+
+</body>
+
+
+
+</html>

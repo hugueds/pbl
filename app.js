@@ -16,6 +16,7 @@ var PartMissing = require('./models/PartMissing');
 const PORT = process.env.PORT || 8080;
 
 const index = require('./routes/index');
+const logisticBuffers = require('./routes/buffers');
 
 var clients = [];
 
@@ -23,7 +24,7 @@ io.on('connection', function(socket) {
 
     console.log('A CLIENT HAS CONNECTED! ' + socket.request.connection.remoteAddress);
 
-	clients.push(socket);
+    clients.push(socket);
 
     socket
         .on('dec-part', (data) => {
@@ -35,18 +36,18 @@ io.on('connection', function(socket) {
             part.save();
         })
 
-	.on('deleted-part', (data) => {
-		console.log("Part deleted");
-	})
+    .on('deleted-part', (data) => {
+        console.log("Part deleted");
+    })
 
 
     .on('disconnect', function() {
 
-	var idx = clients.indexOf(socket);
+        var idx = clients.indexOf(socket);
 
-	clients.splice(idx, 1);
+        clients.splice(idx, 1);
 
-        console.log('SOCKET ID:' + socket.id + ' desconectado');	
+        console.log('SOCKET ID:' + socket.id + ' desconectado');
     });
 
     io.emit('newConnection', socket.request.connection.remoteAddress);
@@ -69,6 +70,7 @@ app
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
     .use('/', index)
+    .use('/buffers', logisticBuffers)
     .use(cookieParser())
     .use(express.static('public'))
     // catch 404 and forward to error handler
