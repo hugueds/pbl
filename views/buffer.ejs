@@ -27,37 +27,44 @@
         var screenWidth = window.innerWidth;
 
         const LEVEL = {
-            "LOW" : 0,
-            "MID" : 1,
-            "HIGH" : 2
+            "LOW" : 1,
+            "MID" : 2,
+            "HIGH" : 3
         }
 
         const BOX_SIZE = {
-            "SMALL" : 0,
-            "COMMOM": 1,
-            "BIG": 2
+            "SMALL" : 1,
+            "COMMOM": 2,
+            "BIG": 3
         }
 
         var bg = new Array(100, 222, 200);
 
         var partBoxes = [
-            new PartBox(123,BOX_SIZE["SMALL"],100,LEVEL["LOW"])
-        ];        
+            new PartBox(123,BOX_SIZE["SMALL"],100,LEVEL["LOW"]),
+            new PartBox(456,BOX_SIZE["COMMOM"],100,LEVEL["LOW"]),
+        ];      
+
+        var partBoxes2 = [
+            new PartBox(789,BOX_SIZE["BIG"],100,LEVEL["LOW"]),            
+        ];   
 
         var buffer = new LBuffer(58, shelfs);               
         var shelfs = [];
 
         
-        shelfs.push(new Shelf(0,10,0));
-        shelfs.push(new Shelf(1,10,0));
-        shelfs.push(new Shelf(2,10,0));
+        shelfs.push(new Shelf(0,10,partBoxes));
+        shelfs.push(new Shelf(1,10,partBoxes2));
+        shelfs.push(new Shelf(2,10,partBoxes));
+        shelfs.push(new Shelf(3,10,partBoxes));
+        shelfs.push(new Shelf(4,10,partBoxes));
+        shelfs.push(new Shelf(5,10,partBoxes));
         console.log(shelfs);
 
 
         function setup() {
             var canvas = createCanvas(screenWidth - (screenWidth * 0.03) , screenHeight - (screenHeight * 0.1));
-            canvas.parent("canvas");      
-            // drawSelf(shelfs);
+            canvas.parent("canvas");                  
         }
 
         function draw() {
@@ -67,6 +74,12 @@
             fill(0);
             //rect(screenWidth * 0.02, screenHeight * 0.84, screenWidth * 0.93, screenHeight * 0.015);//Barra horizontal -> verificar o final com a ultima vertical
             drawSelf(shelfs);
+            fill(255);            
+            rect(120,100,90,70);
+            rect(213,100,90,70);
+            rect(120,200,screenWidth * 0.07,  70);
+            rect(213,200,screenWidth * 0.07,  70);
+            
             //Barras verticais
             /*
             rect(screenWidth * 0.23, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
@@ -75,44 +88,56 @@
             rect(screenWidth * 0.74, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
             rect(screenWidth * 0.94, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
             */
-            fill(255);            
+            fill(255);                        
         }
 
         function drawSelf(shelfs){
             var lastPosition = 0;
-            var shelfHeightPosition = screenHeight * 0.04;
-            var shelfWidth = screenWidth * 0.01;
-            var shelfHeight = screenHeight * 0.8;
+            var shelfHeightPosition = screenHeight * 0.04;           
             shelfs.forEach(shelf => {
-                rect((shelf.position + lastPosition),shelfHeightPosition, shelfWidth, shelfHeight);
+                rect((shelf.position),shelfHeightPosition, shelf.width, shelf.height);
                 lastPosition = self.position;
             });
             fill(0);
         }
 
+        function drawBoxes(shelf, box){
+            rect(shelf.position, box.level, box.size * 10, box.level * 10);
+            fill(255);
+        }
+
+
+        //Construtor do Buffer
         function LBuffer(number, shelfs) {
             this.number = number;
             this.shelfs = shelfs;
             //this.size = shelfs.length;
         }
 
+        //Construtor da prateleira
         function Shelf(id, number, parts) {
             this.id = id;
-            this.size = 0.01;
-            this.position = Math.round((screenWidth * 0.17) * (id + 1));
+            this.width = screenWidth * 0.01;
+            this.height = screenHeight * 0.4;
+            this.size = function(){
+                var maxSize = 0;
+                parts.forEach(p => {
+                    if (p.size > maxSize)
+                        maxSize = p.size;
+                });
+                return maxSize * 10;
+            }()          
+            this.position = Math.round((screenWidth * 0.004) * this.size * (id + 1));            
             this.number = number;
             this.parts = parts;
         }
 
+        //Construtor da caixa
         function PartBox(number, size, position, level) {
             this.number = number;
             this.size = size;
             this.level = level;
             this.position = position;            
-        }
-
-        function Division(){
-            this.size = 0.01;
         }
 
         //Contar prateleiras
@@ -122,6 +147,7 @@
         //Definir tamanhos das caixas
         //Para cada caixa desenhar de acordo com o tamanho na prateleira correspondente
         //Escrever o numero da peça na caixa
+        //Verificar tamanhos padrao de caixa
 
         
     </script>
