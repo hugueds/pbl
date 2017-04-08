@@ -26,28 +26,80 @@
         var screenHeight = window.innerHeight;
         var screenWidth = window.innerWidth;
 
+        const LEVEL = {
+            "LOW" : 0,
+            "MID" : 1,
+            "HIGH" : 2
+        }
+
+        const BOX_SIZE = {
+            "SMALL" : 0,
+            "COMMOM": 1,
+            "BIG": 2
+        }
+
         var bg = new Array(100, 222, 200);
 
         var partBoxes = [
-            new PartBox(123,1,1,2)
-        ];
-
-        var shelfs = [
-            new Shelf(2, partBoxes)
-            ,new Shelf(4, partBoxes)
-            ,new Shelf(6, partBoxes)
-        ];
+            new PartBox(123,BOX_SIZE["SMALL"],100,LEVEL["LOW"])
+        ];        
 
         var buffer = new LBuffer(58, shelfs);               
+        var shelfs = [];
 
+        
+        shelfs.push(new Shelf(0,10,0));
+        shelfs.push(new Shelf(1,10,0));
+        shelfs.push(new Shelf(2,10,0));
+        console.log(shelfs);
+
+
+        function setup() {
+            var canvas = createCanvas(screenWidth - (screenWidth * 0.03) , screenHeight - (screenHeight * 0.1));
+            canvas.parent("canvas");      
+            // drawSelf(shelfs);
+        }
+
+        function draw() {
+            //createBuffer();            
+            background(bg);
+            //rect(screenWidth * 0.02, screenHeight * 0.04, screenWidth * 0.075, screenHeight * 0.8); //Barra branca
+            fill(0);
+            //rect(screenWidth * 0.02, screenHeight * 0.84, screenWidth * 0.93, screenHeight * 0.015);//Barra horizontal -> verificar o final com a ultima vertical
+            drawSelf(shelfs);
+            //Barras verticais
+            /*
+            rect(screenWidth * 0.23, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.40, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.57, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.74, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            rect(screenWidth * 0.94, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
+            */
+            fill(255);            
+        }
+
+        function drawSelf(shelfs){
+            var lastPosition = 0;
+            var shelfHeightPosition = screenHeight * 0.04;
+            var shelfWidth = screenWidth * 0.01;
+            var shelfHeight = screenHeight * 0.8;
+            shelfs.forEach(shelf => {
+                rect((shelf.position + lastPosition),shelfHeightPosition, shelfWidth, shelfHeight);
+                lastPosition = self.position;
+            });
+            fill(0);
+        }
 
         function LBuffer(number, shelfs) {
             this.number = number;
             this.shelfs = shelfs;
-            this.size = shelfs.length;
+            //this.size = shelfs.length;
         }
 
-        function Shelf(number, parts) {
+        function Shelf(id, number, parts) {
+            this.id = id;
+            this.size = 0.01;
+            this.position = Math.round((screenWidth * 0.17) * (id + 1));
             this.number = number;
             this.parts = parts;
         }
@@ -55,35 +107,21 @@
         function PartBox(number, size, position, level) {
             this.number = number;
             this.size = size;
-            this.position = position;
             this.level = level;
+            this.position = position;            
         }
 
         function Division(){
             this.size = 0.01;
         }
 
-
-
-        function setup() {
-            var canvas = createCanvas(screenWidth - (screenWidth * 0.03) , screenHeight - (screenHeight * 0.1));
-            canvas.parent("canvas");            
-        }
-
-        function draw() {
-            //createBuffer();            
-            background(bg);
-            rect(screenWidth * 0.02, screenHeight * 0.04, screenWidth * 0.075, screenHeight * 0.8);
-            fill(0);
-            rect(screenWidth * 0.02, screenHeight * 0.84, screenWidth * 0.93, screenHeight * 0.015);
-            rect(screenWidth * 0.23, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
-            rect(screenWidth * 0.40, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
-            rect(screenWidth * 0.57, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
-            rect(screenWidth * 0.74, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
-            rect(screenWidth * 0.94, screenHeight * 0.04, screenWidth * 0.01, screenHeight * 0.8);
-            fill(255);
-            shelfs.forEach(a => a);
-        }
+        //Contar prateleiras
+        //Para cada prateleira adicionar uma barra vertical
+        //Para cada prateleira adicionar o numero do modulo        
+        //Adicionar barras horizontais de niveis (opcional)
+        //Definir tamanhos das caixas
+        //Para cada caixa desenhar de acordo com o tamanho na prateleira correspondente
+        //Escrever o numero da peça na caixa
 
         
     </script>
