@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<head>
+    <base href="/buffer" />
+    <meta name="author" content="Hugo Peres - SSBHPE" />
+    <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem" />
+    <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry" />
+    <title>PICK BY LIGHT</title>    
+</head>
+
+<body>
+
+    <button type="">Buffer 58</button>
+    <button type="">Buffer 59</button>
+
+    <div id="canvas">
+
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.8/p5.js"></script>
+
+    <script>
+
+        var screenHeight = window.innerHeight;
+        var screenWidth = window.innerWidth;
+        var bgColor = new Array(100, 222, 200);
+
+        const LEVEL = {"LOW" : 1, "MID" : 2, "HIGH" : 3, "TOP" : 4 }
+        const BOX_SIZE = {"SMALL" : 1, "COMMOM": 2, "BIG": 3 }
+       
+        var partBoxes = [
+            // new PartBox(123,BOX_SIZE["SMALL"],1,LEVEL["LOW"]),
+            // new PartBox(123,BOX_SIZE["SMALL"],2,LEVEL["LOW"]),
+            // new PartBox(123,BOX_SIZE["SMALL"],3,LEVEL["LOW"]),
+            new PartBox(456,BOX_SIZE["COMMOM"],1,LEVEL["MID"]),
+            new PartBox(456,BOX_SIZE["COMMOM"],2,LEVEL["MID"]),
+            new PartBox(789,BOX_SIZE["BIG"],1,LEVEL["HIGH"])
+        ];      
+
+        var partBoxes2 = [
+            new PartBox(789,BOX_SIZE["BIG"],100,LEVEL["LOW"]),            
+        ];   
+
+        var buffer = new LBuffer(58, shelfs);               
+        var shelfs = [];
+
+        
+        shelfs.push(new Shelf(0,10,partBoxes));
+        shelfs.push(new Shelf(1,10,partBoxes));
+        shelfs.push(new Shelf(2,10,partBoxes));
+        shelfs.push(new Shelf(3,10,partBoxes));
+        shelfs.push(new Shelf(4,10,partBoxes));
+        shelfs.push(new Shelf(5,10,partBoxes));
+        
+
+        var lastPosition = calcRelation(7.2 , "x" );
+        
+
+        function setup() {            
+            var canvasRelation = { X : calcRelation(99,"x"), Y : calcRelation(90,"y") }
+            var canvas = createCanvas( canvasRelation.X , canvasRelation.Y );
+            canvas.parent("canvas");
+            background(bgColor);
+            fill(255);            
+            rect( calcRelation( 3, "x" ) , calcRelation( 5 , "y" ) , calcRelation( 5, "x" ) , calcRelation( 40 , "y" ) ); //Retangulo branco
+            shelfs.forEach(shelf => drawSelf(shelf));   
+            console.log(shelfs);            
+        }
+
+
+        function draw(){
+            
+        }
+
+       
+        function drawSelf(shelf){
+            fill(100);
+            var boxes = shelf.parts; 
+            shelf.initial = 10;           
+            shelf.position.x = lastPosition;
+
+            //Primeira barra
+            rect( shelf.position.x , shelf.position.y , shelf.width , shelf.height );
+            //Segunda barra
+            rect( ( shelf.position.x + shelf.size) , shelf.position.y  , shelf.width , shelf.height );            
+
+            //Aloca caixas nas posições
+            boxes.forEach(box => allocateBoxes(shelf, box))
+            //Desenha as caixas
+            boxes.forEach(box => drawBox(shelf, box));
+            
+            lastPosition = shelf.position.x + shelf.size;            
+        }
+       
+
+        function drawBox(shelf, box){
+            fill(0,100,200);
+            //Verificar quantas caixas estao na fileira, usar matrix[][], se nulo ou vazio, desenhar
+
+            var boxSize = shelf.size /  box.size - shelf.width;
+            rect(shelf.position.x + shelf.width, 100 , boxSize ,40)
+        }
+
+
+        //Construtor do Buffer
+        function LBuffer(number, shelfs) {
+            this.number = number;
+            this.shelfs = shelfs;            
+        }
+
+        //Construtor da prateleira
+        function Shelf(id, number, parts) {
+            this.id = id;
+            this.number = number;
+            this.parts = parts;
+            this.position = { 
+                x : 0,
+                y : calcRelation(5, "y")
+            }
+            this.width = calcRelation(1, "x");
+            this.height = calcRelation(40, "y");            
+            this.size = parts.reduce((p, v) => p.size > v.size ? p.size : v.size ) * calcRelation(4, "x");                                  
+            this.allocation = {
+                "LOW" : [],
+                "MID" : [],
+                "HIGH" : []
+            }
+        }
+
+        //Construtor da caixa
+        function PartBox(number, size, position, level) {
+            this.number = number;
+            this.size = size;
+            this.level = level;
+            this.position = position;            
+        }
+
+        function calcRelation(relation, position){
+            if (position.toLowerCase() == "x") 
+                return (screenWidth * relation) / 100;
+            else if (position.toLowerCase() == "y")
+                return (screenHeight * relation) / 100;
+        }
+
+        function allocateBoxes(shelf, box){
+            switch(box.level)
+            {
+                case 1: shelf.allocation["LOW"].push(box); break;
+                case 2: shelf.allocation["MID"].push(box); break;
+                case 3: shelf.allocation["HIGH"].push(box); break;
+            } 
+        }
+        
+
+        //Contar prateleiras
+        //Para cada prateleira adicionar uma barra vertical
+        //Para cada prateleira adicionar o numero do modulo        
+        //Adicionar barras horizontais de niveis (opcional)
+        //Definir tamanhos das caixas
+        //Para cada caixa desenhar de acordo com o tamanho na prateleira correspondente
+        //Escrever o numero da peça na caixa
+        //Verificar tamanhos padrao de caixa
+
+        
+    </script>
+
+</body>
+
+
+
+</html>
