@@ -28,9 +28,9 @@
         const BOX_SIZE = {"SMALL" : 1, "COMMOM": 2, "BIG": 3 }
        
         var partBoxes = [
-            // new PartBox(123,BOX_SIZE["SMALL"],1,LEVEL["LOW"]),
-            // new PartBox(123,BOX_SIZE["SMALL"],2,LEVEL["LOW"]),
-            // new PartBox(123,BOX_SIZE["SMALL"],3,LEVEL["LOW"]),
+            new PartBox(123,BOX_SIZE["SMALL"],1,LEVEL["LOW"]),
+            new PartBox(123,BOX_SIZE["SMALL"],2,LEVEL["LOW"]),
+            new PartBox(123,BOX_SIZE["SMALL"],3,LEVEL["LOW"]),
             new PartBox(456,BOX_SIZE["COMMOM"],1,LEVEL["MID"]),
             new PartBox(456,BOX_SIZE["COMMOM"],2,LEVEL["MID"]),
             new PartBox(789,BOX_SIZE["BIG"],1,LEVEL["HIGH"])
@@ -95,9 +95,13 @@
         function drawBox(shelf, box){
             fill(0,100,200);
             //Verificar quantas caixas estao na fileira, usar matrix[][], se nulo ou vazio, desenhar
-
-            var boxSize = shelf.size /  box.size - shelf.width;
-            rect(shelf.position.x + shelf.width, 100 , boxSize ,40)
+            var boxPositionY  = shelf.position.y + shelf.height - box.height;
+            switch(box.level)
+            {                
+                case 2: boxPositionY -= box.height ; break;
+                case 3: boxPositionY -= box.height * 2; break;
+            }
+            rect(shelf.position.x + shelf.width, boxPositionY , box.size - shelf.width , box.height)
         }
 
 
@@ -118,7 +122,7 @@
             }
             this.width = calcRelation(1, "x");
             this.height = calcRelation(40, "y");            
-            this.size = parts.reduce((p, v) => p.size > v.size ? p.size : v.size ) * calcRelation(4, "x");                                  
+            this.size = parts.reduce((p, v) => p.size > v.size ? p.size : v.size );                                  
             this.allocation = {
                 "LOW" : [],
                 "MID" : [],
@@ -129,9 +133,10 @@
         //Construtor da caixa
         function PartBox(number, size, position, level) {
             this.number = number;
-            this.size = size;
+            this.size =  size * calcRelation(4.5, "x");
             this.level = level;
-            this.position = position;            
+            this.position = position; 
+            this.height = calcRelation(5,"x");
         }
 
         function calcRelation(relation, position){
@@ -149,6 +154,8 @@
                 case 3: shelf.allocation["HIGH"].push(box); break;
             } 
         }
+
+        
         
 
         //Contar prateleiras
@@ -159,6 +166,7 @@
         //Para cada caixa desenhar de acordo com o tamanho na prateleira correspondente
         //Escrever o numero da peça na caixa
         //Verificar tamanhos padrao de caixa
+        //Adicionar evento de clique para identificar a caixa
 
         
     </script>
