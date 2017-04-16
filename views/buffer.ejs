@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html manifest='offline.manifest'>
-
+<html>
 <head>
     <base href="/buffer" />
     <meta name="author" content="Hugo Peres - SSBHPE" />
     <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem" />
     <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry" />
-    <title>PICK BY LIGHT</title>
-    <link rel='manifest' href='app.manifest' />
+    <title>PICK BY LIGHT</title>    
 </head>
 
 <body>
@@ -54,11 +52,13 @@
 
         
         shelfs.push(new Shelf(0,10,partBoxes));
-        shelfs.push(new Shelf(1,10,partBoxes2));
+        shelfs.push(new Shelf(1,10,partBoxes));
         shelfs.push(new Shelf(2,10,partBoxes));
         shelfs.push(new Shelf(3,10,partBoxes));
         shelfs.push(new Shelf(4,10,partBoxes));
         shelfs.push(new Shelf(5,10,partBoxes));
+        shelfs.push(new Shelf(6,10,partBoxes));
+        shelfs.push(new Shelf(7,10,partBoxes));
         console.log(shelfs);
 
 
@@ -78,7 +78,7 @@
             rect(120,100,90,70);
             rect(213,100,90,70);
             rect(120,200,screenWidth * 0.07,  70);
-            rect(213,200,screenWidth * 0.07,  70);
+            
             
             //Barras verticais
             /*
@@ -119,13 +119,8 @@
             this.id = id;
             this.width = screenWidth * 0.01;
             this.height = screenHeight * 0.4;
-            this.size = function(){
-                var maxSize = 0;
-                parts.forEach(p => {
-                    if (p.size > maxSize)
-                        maxSize = p.size;
-                });
-                return maxSize * 10;
+            this.size = function(){                
+                return  (10 * parts.reduce((p,v) => { return (p.size > v.size ? p.size : v.size); }))
             }()          
             this.position = Math.round((screenWidth * 0.004) * this.size * (id + 1));            
             this.number = number;
