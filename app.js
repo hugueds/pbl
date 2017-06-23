@@ -42,18 +42,15 @@ io.on('connection', function(socket) {
 
 
     .on('disconnect', function() {
-
         var idx = clients.indexOf(socket);
-
         clients.splice(idx, 1);
-
         console.log('SOCKET ID:' + socket.id + ' desconectado');
     });
 
     io.emit('newConnection', socket.request.connection.remoteAddress);
 });
 
-app.use(function(res, res, next) {
+app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');

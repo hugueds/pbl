@@ -12,6 +12,7 @@ exports.getMissing = (req, res, next) => {
 exports.postMissing = (req, res, next) => {
 	PartMissing.find({})
 	.exec((err, data) => {
+		console.log('Adicionando peça: ', JSON.stringify(data))
 		res.status(200).json(data);
 	});
 }
@@ -28,6 +29,7 @@ exports.deleteMissing = (req, res, next) => {
 	var id = req.params.partid;
 	PartMissing.remove({_id : id})
 	.exec((err, data) => {
+		console.log('Removendo peça: ', JSON.stringify(data))		
 		res.status(200).json({message : 'LT REMOVIDA', id: id});
 	});
 }

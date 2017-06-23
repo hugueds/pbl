@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const db = 'mongodb://localhost/pbl';
 
-var connection = mongoose.connection;
-
 mongoose.connect(db);
+
+var connection = mongoose.connection;
 
 connection
 	.on('error', console.error.bind(console, 'connection error:'))
