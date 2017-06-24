@@ -20,73 +20,73 @@ const logisticBuffers = require('./routes/buffers');
 
 var clients = [];
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
 
-    console.log('A CLIENT HAS CONNECTED! ' + socket.request.connection.remoteAddress);
+    console.log('A CLIENT HAS CONNECTED! ' + socket.request.connection.remoteAddress, new Date().toLocaleString());
 
     clients.push(socket);
 
-    socket
-        .on('dec-part', (data) => {
-            if (typeof(data) !== 'object') data = JSON.parse(data);
-            var part = new PartMissing(data);
-            part.date = new Date();
-            console.log(data);
-            io.emit('dec-part', data);
-            part.save();
-        })
+    socket.on('dec-part', (data) => {
+        if (typeof (data) !== 'object') data = JSON.parse(data);
+        let part = new PartMissing(data);
+        part.date = new Date();        
+        io.emit('dec-part', data);
+        part.save();
+    })
 
-    .on('deleted-part', (data) => {
+    socket.on('deleted-part', (data) => {
+        io.emit('dec-part');
         console.log("Part deleted");
     })
 
 
-    .on('disconnect', function() {
+    socket.on('disconnect', function () {
         var idx = clients.indexOf(socket);
         clients.splice(idx, 1);
         console.log('SOCKET ID:' + socket.id + ' desconectado');
     });
 
     io.emit('newConnection', socket.request.connection.remoteAddress);
+
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
 
-
-app
 // uncomment after placing your favicon in /public
 //.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 //.use(logger('dev'))
-    .set('views', path.join(__dirname, 'views')) // view engine setup
-    .set('view engine', 'ejs')
-    .use(bodyParser.json())
-    .use(bodyParser.urlencoded({ extended: false }))
-    .use('/', index)
-    .use('/buffers', logisticBuffers)
-    .use(cookieParser())
-    .use(express.static('public'))
-    // catch 404 and forward to error handler
-    .use(function(req, res, next) {
-        var err = new Error('Not Found');
-        err.status = 404;
-        next(err);
-    })
-    // error handler
-    .use(function(err, req, res, next) {
-        // set locals, only providing error in development
-        res.locals.message = err.message;
-        res.locals.error = req.app.get('env') === 'development' ? err : {};
-        // render the error page
-        res.status(err.status || 500);
-        res.render('error');
-    });
+app.set('views', path.join(__dirname, 'views')) // view engine setup
+app.set('view engine', 'ejs')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use('/', index)
+app.use('/buffers', logisticBuffers)
+app.use(cookieParser())
+app.use(express.static('public'))
 
-http.listen(PORT, function() {
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+})
+
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+});
+
+http.listen(PORT, function () {
     console.log("Server Connected at PORT: " + PORT + "  " + new Date().toDateString());
 });
 

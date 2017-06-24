@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-var message = "Por favor, selecione um buffer";
+const message = "Por favor, selecione um buffer";
 
 router.get('/', (req, res, next) => {
     res.render('buffer', { message: message });

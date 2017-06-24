@@ -1,43 +1,49 @@
 <!DOCTYPE html>
-<html ng-app="PblApp" manifest='offline.manifest'>
-  <head>
-    <base href="/"/>
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-    <meta name="author" content="Hugo Peres - SSBHPE"/>
-    <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem"/>
-    <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry"/>
-    <title>PICK BY LIGHT</title>
-	<link rel='manifest' href='app.manifest' />
-    <link rel='stylesheet' href="stylesheets/bootstrap.min.css" type="text/css" />
-	<link rel='stylesheet' href="stylesheets/bootstrap-theme.min.css" type="text/css" />
-    <link rel='stylesheet' href='/stylesheets/style-pbl.css' />
-  </head>
+<html ng-app="PblApp" > <!-- manifest='offline.manifest' -->
 
-  <body ng-controller='PickByLight'>
-      
+<head>
+  <base href="/" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="author" content="Hugo Peres - SSBHPE" />
+  <meta name="description" content="Aplicativo Web para chamadas de falta de peça nos buffers de montagem" />
+  <meta name="keywords" content="P30, QAS, Logistica, Automacao, Pbl, P2L, Picking,  Raspberry" />
+  <title>PICK BY LIGHT</title>
+  <link rel='manifest' href='app.manifest' />
+  <link rel='stylesheet' href="css/bootstrap.min.css" type="text/css" />
+  <link rel='stylesheet' href="css/bootstrap-theme.min.css" type="text/css" />
+  <link rel='stylesheet' href='css/style-pbl.css' />
+</head>
 
-    <ui-view></ui-view>    
-    
-    
-    <!-- SOCKET I/O -->     
-    <script src="/socket.io/socket.io.js"></script>
-    <!-- MODULES -->    
-    <script type="text/javascript" src="javascripts/angular/angular.min.js"> </script>
-    <!-- <script type="text/javascript" src="javascripts/angular/angular-websocket.js"> </script> -->
-    <script type="text/javascript" src="javascripts/angular/angular-ui-router.js"> </script>
-    <script type="text/javascript" src="javascripts/angularApp.js"> </script>
-    <!-- FILTERS -->
-    <script type="text/javascript" src="javascripts/filters/filters.js"> </script>
-    <!-- SERVICES -->   
-    <script type="text/javascript" src="javascripts/services/pbl-service.js"> </script>
-    <script type="text/javascript" src="javascripts/services/socket-service.js"> </script>    
-    <!-- CONTROLLERS -->    
-    <script type="text/javascript" src="javascripts/controllers/pbl-controller.js"> </script>
-    <!-- SCRIPTS -->
-    <script src="javascripts/scripts.js"></script>
+<body ng-controller='PickByLight'>
 
-  </body>
+
+  <ui-view></ui-view>
+
+
+  <!-- SOCKET I/O -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- MODULES -->
+  <script type="text/javascript" src="js/angular/angular.min.js"></script>
+  <!-- <script type="text/javascript" src="js/angular/angular-websocket.js"> </script> -->
+  <script type="text/javascript" src="js/angular/angular-ui-router.js"></script>
+  <script type="text/javascript" src="js/angularApp.js"></script>
+
+  <!-- FILTERS -->
+  <script type="text/javascript" src="js/filters/filters.js"></script>
+
+  <!-- SERVICES -->
+  <script type="text/javascript" src="js/services/pbl-service.js"></script>
+  <script type="text/javascript" src="js/services/socket-service.js"></script>
+
+  <!-- CONTROLLERS -->
+  <script type="text/javascript" src="js/controllers/pbl-controller.js"></script>
+  
+  <!-- SCRIPTS -->
+  <script src="js/scripts.js"></script>
+
+</body>
 
 
 

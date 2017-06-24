@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const colors = require('colors');
-const io = require('socket.io');
+//const io = require('socket.io');
 
-var parts = require('../routes/routes');
+const parts = require('../routes/routes');
 
 router.route('/')
     .get((req, res) => {
