@@ -41,10 +41,12 @@ io.on('connection', function (socket) {
 
 
     socket.on('disconnect', function () {
-        var idx = clients.indexOf(socket);
+        let idx = clients.indexOf(socket);
         clients.splice(idx, 1);
         console.log('SOCKET ID:' + socket.id + ' desconectado');
     });
+
+    socket.on('ip', () => 
 
     io.emit('newConnection', socket.request.connection.remoteAddress);
 

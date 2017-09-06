@@ -28,11 +28,7 @@ function pblCtrlfunction($scope, socket, pbl) {
     });
 
     $scope.removePart = function(part) {        
-        pbl.removeMissingPart(part._id);
-        var index = $scope.parts.indexOf(part);
-        $scope.parts.splice(index, 1);
-        pbl.getMissingParts();
-        $scope.parts = pbl.parts;
+        pbl.removeMissingPart(part._id);        
         socket.emit('deleted-part');        
     };
 
