@@ -15,21 +15,25 @@ function pblCtrlfunction($scope, socket, pbl) {
         b = Math.floor((Math.random() * 100) + 1);
         c = Math.floor((Math.random() * 100) + 1);
         part = {
-            part: a,
-            buffer: b,
-            module: c
+            part: a + 'teste',
+            buffer: b + 'teste',
+            module: c + 'teste'
         }
         socket.emit('dec-part', part);
     }
 
     socket.on('dec-part', function(data) {
+        if (!data.mute) {
+            var sound = new Audio('/effects/ding-dong.wav');
+            sound.play();
+        }
         pbl.getMissingParts();
         $scope.parts = pbl.parts;
     });
 
-    $scope.removePart = function(part) {        
-        pbl.removeMissingPart(part._id);        
-        socket.emit('deleted-part');        
+    $scope.removePart = function(part) {
+        pbl.removeMissingPart(part._id);
+        socket.emit('deleted-part');
     };
 
 }

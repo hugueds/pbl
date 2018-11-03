@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var PartMissingSchema = new Schema({
+const PartMissingSchema = new Schema({
+	stationId: Number,
 	part : String, 
 	buffer : String, 
 	module : String, 

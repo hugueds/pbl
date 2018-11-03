@@ -1,5 +1,3 @@
-'use strict';
-
 const PartMissing = require('../models/PartMissing');
 
 exports.getMissing = (req, res, next) => {
