@@ -4,4 +4,5 @@ node_modules/
 test/
 public/javascripts/jquery/
 public/stylesheets/bootstrap/
-
+public/_backup
+public/_release
