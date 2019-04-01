@@ -28,7 +28,8 @@ io.on('connection', function(socket) {
     clients.push(socket);
 
     socket.on('dec-part', (data) => {
-        if (typeof(data) !== 'object') data = JSON.parse(data);
+        if (data && typeof(data) !== 'object') data = JSON.parse(data);
+        else return;
         const part = new PartMissing(data);
         part.date = new Date();
         part.save();        
